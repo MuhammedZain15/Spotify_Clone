@@ -21,6 +21,7 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: SizedBox(
         height: 90.h,
         child: AppBar(
+
           actionsPadding: EdgeInsets.only(right: 15.w),
           actions: actions,
           actionsIconTheme: IconThemeData(

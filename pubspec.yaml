@@ -44,7 +44,7 @@ dependencies:
   supabase_flutter:
   flutter_dotenv: ^5.2.1
   cached_network_image: ^3.4.1
-  just_audio: ^0.10.3
+  just_audio:
 
 
 dev_dependencies:

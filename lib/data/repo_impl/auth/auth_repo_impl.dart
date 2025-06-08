@@ -15,4 +15,9 @@ class AuthRepoImpl extends AuthRepo {
   Future<Either> signup(CreateUserRequestModel createUserRequestModel) async {
     return await sl<AuthServices>().signup(createUserRequestModel);
   }
+
+  @override
+  Future<Either> getUser() async {
+    return await sl<AuthServices>().getUser();
+  }
 }

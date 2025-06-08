@@ -6,7 +6,7 @@ import '../../data_source/songs/songs_services.dart';
 
 class SongsRepoImpl extends SongsRepo {
   @override
-  Future<Either> getNewSongs()async {
+  Future<Either> getNewSongs() async {
     return await sl<SongsServices>().getSongs();
   }
 
@@ -18,5 +18,10 @@ class SongsRepoImpl extends SongsRepo {
   @override
   Future<bool> isFavorite(String songId) async {
     return await sl<SongsServices>().isFavorite(songId);
+  }
+
+  @override
+  Future<Either> getFavoriteSongs() async {
+    return await sl<SongsServices>().getFavoriteSongs();
   }
 }

@@ -1,6 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce/data/models/auth/create_user_request_model.dart';
+import 'package:e_commerce/domain/entities/auth/user_entity.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../core/constants.dart';
+import '../../models/auth/user_model.dart';
 
 abstract class AuthServices {
   Future<Either<String, String>> signup(
@@ -10,6 +14,8 @@ abstract class AuthServices {
   Future<Either<String, String>> signin(
     CreateUserRequestModel createUserRequestModel,
   );
+
+  Future<Either> getUser();
 }
 
 class AuthServicesImpl implements AuthServices {
@@ -64,5 +70,31 @@ class AuthServicesImpl implements AuthServices {
       return Left("Signup error: $error");
     }
   }
-}
 
+  @override
+  Future<Either<String, UserEntity>> getUser() async {
+    final supabase = Supabase.instance.client;
+
+    final user = supabase.auth.currentUser;
+    if (user == null) {
+      return const Left("User not logged in");
+    }
+
+    try {
+      final response = await supabase
+          .from('Users')
+          .select()
+          .eq('id', user.id)
+          .single();
+
+      UserModel userModel = UserModel.fromJson(response);
+      userModel.imageUrl =
+          user.userMetadata?['image_url'] ?? Constants.defaultImage;
+
+      UserEntity userEntity = userModel.toEntity();
+      return Right(userEntity);
+    } catch (e) {
+      return Left("Failed to get user: $e");
+    }
+  }
+}

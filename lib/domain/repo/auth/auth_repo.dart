@@ -5,4 +5,6 @@ abstract class AuthRepo {
   Future<Either> signup(CreateUserRequestModel createUserRequestModel);
 
   Future<Either> signin(CreateUserRequestModel createUserRequestModel);
+
+  Future<Either> getUser();
 }

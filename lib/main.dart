@@ -1,6 +1,6 @@
 import 'package:e_commerce/core/config/theme/app_theme.dart';
-import 'package:e_commerce/presentation/auth/pages/signup_or_signin_page.dart';
 import 'package:e_commerce/presentation/choose_theme/bloc/theme_cubit.dart';
+import 'package:e_commerce/presentation/choose_theme/pages/choose_theme_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,
               themeMode: mode,
-              home: const SignupOrSigninPage(),
+              home: const ChooseThemePage(),
             );
           },
         ),

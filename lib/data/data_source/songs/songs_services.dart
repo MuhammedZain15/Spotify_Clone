@@ -12,6 +12,8 @@ abstract class SongsServices {
   Future<Either> addOrRemoveFavoriteSong(String songId);
 
   Future<bool> isFavorite(String songId);
+
+  Future<Either> getFavoriteSongs();
 }
 
 class SongsServicesImpl implements SongsServices {
@@ -100,6 +102,40 @@ class SongsServicesImpl implements SongsServices {
       }
     } catch (e) {
       return false;
+    }
+  }
+
+  @override
+  Future<Either> getFavoriteSongs() async {
+    final supabase = Supabase.instance.client;
+    final user = supabase.auth.currentUser;
+
+    String userId = user!.id;
+    try {
+      final data = await supabase
+          .from('FavoriteSongs')
+          .select(
+            'song_id, Songs(id_uuid, title, artist, duration, releaseDate)',
+          )
+          .eq('user_id', userId);
+
+      if (data.isEmpty) {
+        return const Right([]);
+      }
+
+      List<SongEntity> favoriteSongs = data
+          .map((item) {
+            final songJson = item['Songs'];
+            if (songJson == null) return null;
+            final model = SongsModel.fromJson(songJson);
+            return model.toEntity();
+          })
+          .whereType<SongEntity>()
+          .toList();
+
+      return Right(favoriteSongs);
+    } catch (e) {
+      return Left('Failed to fetch favorite songs: $e');
     }
   }
 }

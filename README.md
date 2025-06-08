@@ -2,6 +2,11 @@
 
 A modern Flutter application that replicates the core features of Spotify, built with clean architecture principles and modern state management.
 
+## 🎥 Demo Video
+
+[![Watch the demo]](https://drive.google.com/file/d/1inlxgmXWRnmBQ8BcTbVuGTu3evXDQpK4/view?usp=drive_link)
+
+---
 ## 🚀 Features
 
 - Music streaming interface
